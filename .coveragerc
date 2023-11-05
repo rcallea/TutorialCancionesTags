@@ -1,7 +1,9 @@
 # .coveragerc to control coverage.py
 [run]
 branch = True
-source = src
+source = 
+    src
+    tests
 # omit = bad_file.py
 
 [paths]

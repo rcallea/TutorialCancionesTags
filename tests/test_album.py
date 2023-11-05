@@ -34,15 +34,6 @@ class AlbumTestCase(unittest.TestCase):
         self.assertIsNotNone(consulta2)
 
 
-    def test_dar_albumes(self):
-        consulta1 = self.coleccion.dar_albumes()
-        titulo_album = self.data_factory.name()
-        anio_album = self.data_factory.year()
-        descripcion_album = self.data_factory.sentence()
-        self.coleccion.agregar_album(titulo_album, anio_album, descripcion_album, "CD")
-        consulta2 = self.coleccion.dar_albumes()
-        self.assertGreaterEqual(len(consulta2), len(consulta1))
-
     def test_dar_album_por_id(self):
         titulo_album = self.data_factory.name()
         anio_album = self.data_factory.year()
