@@ -33,6 +33,16 @@ class AlbumTestCase(unittest.TestCase):
         self.assertEqual(consulta1.titulo, titulo_album1)
         self.assertIsNotNone(consulta2)
 
+    def test_editar_album(self):
+        nueva_descripcion_album = self.data_factory.sentence()
+        self.coleccion.editar_album(2, "Clara luna-Mix", 2013, nueva_descripcion_album, "DISCO")
+        consulta = self.session.query(Album).filter(Album.id == 2).first()
+        self.assertIsNot(consulta.titulo, "Live Killers")
+
+    def test_eliminar_album(self):
+        self.coleccion.eliminar_album(1)
+        consulta = self.session.query(Album).filter(Album.id == 1).first()
+        self.assertIsNone(consulta)
 
     def test_dar_albumes(self):
         consulta1 = self.coleccion.dar_albumes()
