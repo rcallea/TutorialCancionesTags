@@ -203,8 +203,8 @@ class Coleccion():
             session.delete(interprete)
             session.commit()
             return True
-        except:
-            return False
+        except BaseException as e:
+            raise e
 
     def dar_interpretes(self):
         interpretes = [elem.__dict__ for elem in session.query(Interprete).all()]
