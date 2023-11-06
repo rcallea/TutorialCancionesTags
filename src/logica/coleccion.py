@@ -70,27 +70,13 @@ class Coleccion():
         interpretesCancion = []
         if len(interpretes) == 0:
             return False
-        else:
-            if album_id > 0:
-                busqueda = session.query(Cancion).filter(Cancion.albumes.any(Album.id.in_([album_id])),
-                                                         Cancion.titulo == titulo).all()
-                if len(busqueda) == 0:
-                    album = session.query(Album).filter(Album.id == album_id).first()
-                    nuevaCancion = Cancion(titulo=titulo, minutos=minutos, segundos=segundos, compositor=compositor,
-                                           albumes=[album])
-                    for item in interpretes:
-                        interprete = Interprete(nombre=item["nombre"], texto_curiosidades=item["texto_curiosidades"],
-                                                cancion=nuevaCancion.id)
-                        session.add(interprete)
-                        interpretesCancion.append(interprete)
-                    nuevaCancion.interpretes = interpretesCancion
-                    session.add(nuevaCancion)
-                    session.commit()
-                    return True
-                else:
-                    return False
-            else:
-                nuevaCancion = Cancion(titulo=titulo, minutos=minutos, segundos=segundos, compositor=compositor)
+        if album_id > 0:
+            busqueda = session.query(Cancion).filter(Cancion.albumes.any(Album.id.in_([album_id])),
+                                                        Cancion.titulo == titulo).all()
+            if len(busqueda) == 0:
+                album = session.query(Album).filter(Album.id == album_id).first()
+                nuevaCancion = Cancion(titulo=titulo, minutos=minutos, segundos=segundos, compositor=compositor,
+                                        albumes=[album])
                 for item in interpretes:
                     interprete = Interprete(nombre=item["nombre"], texto_curiosidades=item["texto_curiosidades"],
                                             cancion=nuevaCancion.id)
@@ -100,6 +86,20 @@ class Coleccion():
                 session.add(nuevaCancion)
                 session.commit()
                 return True
+            else:
+                return False
+        else:
+            nuevaCancion = Cancion(titulo=titulo, minutos=minutos, segundos=segundos, compositor=compositor)
+            for item in interpretes:
+                interprete = Interprete(nombre=item["nombre"], texto_curiosidades=item["texto_curiosidades"],
+                                        cancion=nuevaCancion.id)
+                session.add(interprete)
+                interpretesCancion.append(interprete)
+            nuevaCancion.interpretes = interpretesCancion
+            session.add(nuevaCancion)
+            session.commit()
+            return True
+        
 
     def editar_cancion(self, cancion_id, titulo, minutos, segundos, compositor, interpretes):
         busqueda = session.query(Cancion).filter(Cancion.titulo == titulo, Cancion.id != cancion_id).all()
@@ -147,7 +147,7 @@ class Coleccion():
     def dar_interprete_por_id(self, interprete_id):
         return session.query(Interprete).filter_by(id=interprete_id).first().__dict__
 
-    def dar_canciones_de_album(self, album_id):
+    def dar_canciones_de_album(self):
         return []
 
     def buscar_canciones_por_titulo(self, cancion_titulo):
@@ -203,8 +203,8 @@ class Coleccion():
             session.delete(interprete)
             session.commit()
             return True
-        except:
-            return False
+        except BaseException as e:
+            raise e
 
     def dar_interpretes(self):
         interpretes = [elem.__dict__ for elem in session.query(Interprete).all()]
