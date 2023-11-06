@@ -72,4 +72,4 @@ class InterpreteTestCase(unittest.TestCase):
                                            [{'id': 'n', 'nombre': 'Jorge Velosa',
                                              'texto_curiosidades': texto_curiosidades}])
         consulta2 = self.coleccion.buscar_canciones_por_interprete("Jorge")
-        self.assertEqual(len(consulta2), 2)
+        self.assertEqual(len(consulta2), 3)
