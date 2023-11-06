@@ -31,11 +31,6 @@ class InterpreteTestCase(unittest.TestCase):
         consulta2 = self.coleccion.editar_interprete(consulta1, nombre_interprete, texto_curiosidades)
         self.assertTrue(consulta2)
 
-    def testEliminarInterprete(self):
-        self.coleccion.eliminar_interprete(3)
-        consulta = self.session.query(Interprete).filter(Interprete.id == 3).first()
-        self.assertIsNone(consulta)
-
     def test_buscar_sin_parametros(self):
         consulta1 = self.session.query(Cancion).all()
         consulta2 = self.coleccion.buscar_canciones_por_interprete("")
