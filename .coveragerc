@@ -1,7 +1,7 @@
 # .coveragerc to control coverage.py
 [run]
 branch = True
-source = src
+source = .
 omit =
     src/__main__.py
     src/logica/__init__.py
