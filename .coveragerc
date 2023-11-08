@@ -1,13 +1,13 @@
 # .coveragerc to control coverage.py
 [run]
 branch = True
-source = src
+include = src
 omit =
     src/__main__.py
     src/logica/__init__.py
 
 [paths]
-source =
+include =
     src/
     */site-packages/
 
