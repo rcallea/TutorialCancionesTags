@@ -2,7 +2,9 @@
 [run]
 branch = True
 source = src
-omit = src/__main__.py
+omit =
+    src/__main__.py
+    src/logica/__init__.py
 
 [paths]
 source =
